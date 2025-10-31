@@ -7,6 +7,7 @@ const ERROR_MESSAGE = {
   EMPTY_INPUT: "[ERROR] 값을 입력해주세요."
 }
 const PATTERN_NUMBER_ONLY = /^[0-9]+$/;
+const LOTTO_PRICE = 1000;
 
 class App {
   async run() {
@@ -25,11 +26,15 @@ export function validateNumberOnly(input) {
 }
 
 export function validateUnitOfThousand(input) {
-  if (input % 1000 !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
+  if (input % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
 }
 
 export function validateNotEmpty(input) {
   if(input.trim() === "") throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+}
+
+export function purchaseCount(input) {
+  return Math.floor(input / LOTTO_PRICE);
 }
 
 export default App;

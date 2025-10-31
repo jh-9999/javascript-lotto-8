@@ -2,6 +2,7 @@ import {
     validateNumberOnly,
     validateUnitOfThousand,
     validateNotEmpty,
+    purchaseCount,
 } from "../src/App.js";
 
 describe("App 테스트", () => {
@@ -25,10 +26,15 @@ describe("App 테스트", () => {
         })
         .toThrow("[ERROR] 1000원 단위로 입력해 주세요.");
     })
+
     test("사용자가 입력값을 비워두면 예외가 발생한다.", () =>{
         expect(() => {
             validateNotEmpty("")
         })
         .toThrow("[ERROR] 값을 입력해주세요.")
+    })
+    
+    test("사용자가 입력한 금액을 1000원 단위로 환산하여 개수를 반환한다.", ()=> {
+        expect(purchaseCount(7000)).toBe(7);
     })
 })
