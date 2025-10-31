@@ -1,4 +1,4 @@
-import { validateNumberOnly } from "../src/App.js";
+import { validateNumberOnly, validateUnitOfThousand } from "../src/App.js";
 
 describe("App 테스트", () => {
 
@@ -13,5 +13,12 @@ describe("App 테스트", () => {
             validateNumberOnly("100!j");
         })
         .toThrow("[ERROR] 숫자만 입력해 주세요.");
+    })
+
+    test("입력된 정수가 1000원 단위가 아니면 예외가 발생한다.", () =>{
+        expect(() => {
+            validateUnitOfThousand(1001);
+        })
+        .toThrow("[ERROR] 1000원 단위로 입력해 주세요.");
     })
 })
