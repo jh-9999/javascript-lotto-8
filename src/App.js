@@ -62,5 +62,12 @@ function printLottoNumbers(purchaseCount) {
   }
 }
 
+export function convertStringToNumbers(input) {
+  for (let i = 0; i < input.length; i++) {
+    let number = Number(input[i]);
+    input[i] = number;
+  }
+  return input;
+}
 
 export default App;
