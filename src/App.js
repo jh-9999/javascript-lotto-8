@@ -21,6 +21,10 @@ async function userInput(placeholder = "") {
   return await Console.readLineAsync(placeholder);
 }
 
+export function print(input) {
+  Console.print(input);
+}
+
 export function validateNumberOnly(input) {
   if (!PATTERN_NUMBER_ONLY.test(input)) {
     throw new Error(ERROR_MESSAGE.INVALID_NUMBER);
@@ -50,5 +54,6 @@ export function splitNumbers(input) {
 function generateLottoNumbers() {
   return Random.pickUniqueNumbersInRange(1, 45, 6);
 }
+
 
 export default App;
