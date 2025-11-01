@@ -21,6 +21,9 @@ class Lotto {
   }
 
   // TODO: 추가 기능 구현
+
+  getNumbers() { return [...this.#numbers]; }
+
   validateLengthOfNumbers(numbers) {
     if (numbers.length !== LOTTO_NUMBER_COUNT) {
       throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);
