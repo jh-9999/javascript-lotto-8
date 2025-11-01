@@ -24,12 +24,16 @@ class Lotto {
     }
   }
 
+  validateSameNumber(a, b) {
+    if (a === b) {
+      throw new Error(ERROR_MESSAGE.INVALID_DUPLICATE_NUMBERS);
+    }
+  }
+
   validateDuplicateNumbers(numbers) {
     for (let i = 0; i < numbers.length; i++) {
       for (let j = i + 1; j < numbers.length; j++) {
-        if (numbers[i] === numbers[j]) {
-          throw new Error(ERROR_MESSAGE.INVALID_DUPLICATE_NUMBERS);
-        }
+        this.checkSameNumber(numbers[i], numbers[j]);
       }
     }
   }

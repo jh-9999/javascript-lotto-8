@@ -1,4 +1,4 @@
-import { Console } from "@woowacourse/mission-utils"
+import { Console, Random } from "@woowacourse/mission-utils"
 
 const PLACEHOLDER_BUY_LOTTO = "구입금액을 입력해 주세요.\n";
 const ERROR_MESSAGE = {
@@ -45,6 +45,10 @@ export function purchaseCount(input) {
 
 export function splitNumbers(input) {
   return input.split(",").filter(Boolean);
+}
+
+function generateLottoNumbers() {
+  return Random.pickUniqueNumbersInRange(1, 45, 6);
 }
 
 export default App;
