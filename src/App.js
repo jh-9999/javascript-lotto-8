@@ -43,4 +43,8 @@ export function purchaseCount(input) {
   return Math.floor(input / LOTTO_PRICE);
 }
 
+export function splitNumbers(input) {
+  return input.split(",").filter(Boolean);
+}
+
 export default App;
