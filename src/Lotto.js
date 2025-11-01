@@ -1,3 +1,9 @@
+const ERROR_MESSAGE = {
+  INVALID_LENGTH_OF_NUMBERS: "[ERROR] 로또 번호는 6개여야 합니다.",
+  INVALID_DUPLICATE_NUMBERS: "[ERROR] 로또 번호에 중복된 숫자가 있습니다."
+}
+const LOTTO_NUMBER_COUNT = 6;
+
 class Lotto {
   #numbers;
 
@@ -7,12 +13,26 @@ class Lotto {
   }
 
   #validate(numbers) {
-    if (numbers.length !== 6) {
-      throw new Error("[ERROR] 로또 번호는 6개여야 합니다.");
-    }
+    this.validateLengthOfNumbers(numbers);
+    this.validateDuplicateNumbers(numbers);
   }
 
   // TODO: 추가 기능 구현
+  validateLengthOfNumbers(numbers) {
+    if (numbers.length !== LOTTO_NUMBER_COUNT) {
+      throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);
+    }
+  }
+
+  validateDuplicateNumbers(numbers) {
+    for (let i = 0; i < numbers.length; i++) {
+      for (let j = i + 1; j < numbers.length; j++) {
+        if (numbers[i] === numbers[j]) {
+          throw new Error(ERROR_MESSAGE.INVALID_DUPLICATE_NUMBERS);
+        }
+      }
+    }
+  }
 }
 
 export default Lotto;
