@@ -67,9 +67,9 @@ describe("Validator 테스트", () => {
         .toThrow("[ERROR] 번호는 1~45 사이의 숫자여야 합니다.")
     })
 
-    test("사용자가 입력한 보너스 번호가 1개가 아니면 예외가 발생한다.", () => {
+    test("사용자가 입력한 보너스 번호가 3개 이상이면 예외가 발생한다.", () => {
         expect(() => {
-            validateBonusNumberCount("1,2");
+            validateBonusNumberCount("1,2,3");
         })
         .toThrow("[ERROR] 보너스 번호는 1개만 입력해주세요.")
     })

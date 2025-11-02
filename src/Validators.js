@@ -13,7 +13,7 @@ const ERROR_MESSAGE = {
 const PATTERN_NUMBER_ONLY = /^[0-9]+$/;
 const PATTERN_NUMBER_AND_COMMA = /^[0-9,]+$/
 
-const BONUS_NUMBER_COUNT = 1;
+const BONUS_NUMBER_COUNT = 2;
 
 const LOTTO_PRICE = 1000;
 const LOTTO_NUMBER_RANGE = [1, 45];
@@ -63,7 +63,7 @@ export function validateNumberRange(Array) {
 }
 
 export function validateBonusNumberCount(string) {
-  if (string.length !== BONUS_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_BONUS_NUMBER_COUNT);
+  if (string.length > BONUS_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_BONUS_NUMBER_COUNT);
 }
 
 export function validateWinningNumbersCount(Array) {
