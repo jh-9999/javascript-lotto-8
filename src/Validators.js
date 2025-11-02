@@ -3,19 +3,21 @@ const ERROR_MESSAGE = {
     INVALID_UNIT_OF_THOUSAND: "[ERROR] 1000원 단위로 입력해 주세요.",
     INVALID_NUMBER_AND_COMMA: "[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.",
     INVALID_MINIMUM_AMOUNT: "[ERROR] 최소 금액 1000원 이상을 입력해주세요.",
+    INVALID_BONUS_NUMBER_COUNT: "[ERROR] 보너스 번호는 1개만 입력해주세요.",
     EMPTY_INPUT: "[ERROR] 값을 입력해주세요.",
-  }
+}
 
 const PATTERN_NUMBER_ONLY = /^[0-9]+$/;
 const PATTERN_NUMBER_AND_COMMA = /^[0-9,]+$/
 
 const LOTTO_PRICE = 1000;
+const BONUS_NUMBER_COUNT = 1;
 
 export function validateNumberOnly(input) {
-    if (!PATTERN_NUMBER_ONLY.test(input)) {
-      throw new Error(ERROR_MESSAGE.INVALID_NUMBER);
-    }
+  if (!PATTERN_NUMBER_ONLY.test(input)) {
+    throw new Error(ERROR_MESSAGE.INVALID_NUMBER);
   }
+}
 
 export function validateUnitOfThousand(input) {
   if (input % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
@@ -25,15 +27,15 @@ export function validateNotEmpty(input) {
   if (Array.isArray(input)) {
     if (input.length === 0) throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
     return;
-  }
+}
 
   if (typeof input === "string") {
     if (input.trim() === "") throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
     return;
-  }
+}
   
   if (input === null || input === undefined) throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
-  } 
+} 
 
 export function validateMinimumAmount(input) {
   input = Number(input);
@@ -41,7 +43,11 @@ export function validateMinimumAmount(input) {
 }
   
 export function validateNumberAndComma(input) {
-if(!PATTERN_NUMBER_AND_COMMA.test(input)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
+  if(!PATTERN_NUMBER_AND_COMMA.test(input)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
+}
+
+export function validateBonusNumberCount(input) {
+  if (input.length !== BONUS_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_BONUS_NUMBER_COUNT);
 }
 
 export function validatePurchaseInput(input) {

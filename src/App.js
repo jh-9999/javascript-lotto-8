@@ -32,7 +32,6 @@ class App {
 
     let winningNumbersArray = splitNumbers(winningNumbers);
     validateNotEmpty(winningNumbersArray);
-    
     winningNumbersArray = convertStringToNumbers(winningNumbersArray);
 
     let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
