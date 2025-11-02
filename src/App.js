@@ -146,7 +146,7 @@ function generateLottoTickets(count) {
   for (let i = 0; i < count; i++) {
     let numbers = generateLottoNumbers();
     let ticket = new Lotto(numbers);
-    print(ticket.getNumbers());
+    print(`[${ticket.getNumbers().join(", ")}]`);
     tickets.push(ticket);
   }
   return tickets;
