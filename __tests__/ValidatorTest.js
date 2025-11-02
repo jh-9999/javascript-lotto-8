@@ -5,6 +5,7 @@ import {
     validateNumberAndComma,
     validateMinimumAmount,
     validateBonusNumberCount,
+    validateNumberRange,
 } from "../src/validators.js";
 
 describe("Validator 테스트", () => {
@@ -44,11 +45,23 @@ describe("Validator 테스트", () => {
         .toThrow("[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.")
     })
 
+    test("사용자가 입력한 번호가가 1미만이면 예외가 발생한다.", () => {
+        expect(() => {
+            validateNumberRange([0]);
+        })
+        .toThrow("[ERROR] 번호는 1~45 사이의 숫자여야 합니다.")
+    })
+    test("사용자가 입력한 번호가 45초과이면 예외가 발생한다.", () => {
+        expect(() => {
+            validateNumberRange([46]);
+        })
+        .toThrow("[ERROR] 번호는 1~45 사이의 숫자여야 합니다.")
+    })
+
     test("사용자가 입력한 보너스 번호가 1개가 아니면 예외가 발생한다.", () => {
         expect(() => {
             validateBonusNumberCount("1,2");
         })
         .toThrow("[ERROR] 보너스 번호는 1개만 입력해주세요.")
     })
-
 })

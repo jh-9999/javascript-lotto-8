@@ -1,8 +1,9 @@
 const ERROR_MESSAGE = {
     INVALID_NUMBER: "[ERROR] 숫자만 입력해 주세요.",
     INVALID_UNIT_OF_THOUSAND: "[ERROR] 1000원 단위로 입력해 주세요.",
-    INVALID_NUMBER_AND_COMMA: "[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.",
     INVALID_MINIMUM_AMOUNT: "[ERROR] 최소 금액 1000원 이상을 입력해주세요.",
+    INVALID_NUMBER_AND_COMMA: "[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.",
+    INVALID_NUMBER_RANGE: "[ERROR] 번호는 1~45 사이의 숫자여야 합니다.",
     INVALID_BONUS_NUMBER_COUNT: "[ERROR] 보너스 번호는 1개만 입력해주세요.",
     EMPTY_INPUT: "[ERROR] 값을 입력해주세요.",
 }
@@ -12,6 +13,7 @@ const PATTERN_NUMBER_AND_COMMA = /^[0-9,]+$/
 
 const LOTTO_PRICE = 1000;
 const BONUS_NUMBER_COUNT = 1;
+const LOTTO_NUMBER_RANGE = [1, 45];
 
 export function validateNumberOnly(input) {
   if (!PATTERN_NUMBER_ONLY.test(input)) {
@@ -44,6 +46,15 @@ export function validateMinimumAmount(input) {
   
 export function validateNumberAndComma(input) {
   if(!PATTERN_NUMBER_AND_COMMA.test(input)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
+}
+
+export function validateNumberRange(input) {
+  for (let number of input) {
+    if (
+      number < LOTTO_NUMBER_RANGE[0] ||
+      number > LOTTO_NUMBER_RANGE[1]
+    ) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_RANGE);
+  }
 }
 
 export function validateBonusNumberCount(input) {
