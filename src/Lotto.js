@@ -21,6 +21,16 @@ class Lotto {
 
   getNumbers() { return [...this.#numbers]; }
 
+  compareWithWinningNumbers(winningNumbers) {
+    let count = 0;
+    for (let number of this.#numbers) {
+      if (winningNumbers.includes(number)) {
+        count++
+      }
+    }
+    return count;
+  }
+
   validateLengthOfNumbers(numbers) {
     if (numbers.length !== LOTTO_NUMBER_COUNT) {
       throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);

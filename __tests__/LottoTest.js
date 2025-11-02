@@ -12,4 +12,8 @@ describe("로또 클래스 테스트", () => {
       new Lotto([1, 2, 3, 4, 5, 5]);
     }).toThrow("[ERROR]");
   });
+
+  test("로또 번호와 당첨 번호를 비교하여 일치하는 번호의 개수를 반환한다.", () => {
+    expect(new Lotto([1, 2, 3, 4, 5, 6]).compareWithWinningNumbers([1, 2, 3, 4, 5, 6])).toBe(6);
+  });
 });

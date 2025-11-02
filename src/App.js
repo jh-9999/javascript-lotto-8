@@ -43,7 +43,11 @@ class App {
 
     let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
     validateBonusNumberCount(bonusNumber);
+
+    bonusNumber = Number(bonusNumber);
     validateDuplicateWithWinningNumbers(winningNumbersArray, bonusNumber);
+    validateNumberRange([bonusNumber]);
+    
   }
 }
 
