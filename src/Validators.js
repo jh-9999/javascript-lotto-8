@@ -4,6 +4,7 @@ const ERROR_MESSAGE = {
     INVALID_MINIMUM_AMOUNT: "[ERROR] 최소 금액 1000원 이상을 입력해주세요.",
     INVALID_NUMBER_AND_COMMA: "[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.",
     INVALID_NUMBER_RANGE: "[ERROR] 번호는 1~45 사이의 숫자여야 합니다.",
+    INVALID_LENGTH_OF_NUMBERS: "[ERROR] 당첨 번호는 6개여야 합니다.",
     INVALID_BONUS_NUMBER_COUNT: "[ERROR] 보너스 번호는 1개만 입력해주세요.",
     EMPTY_INPUT: "[ERROR] 값을 입력해주세요.",
 }
@@ -11,18 +12,21 @@ const ERROR_MESSAGE = {
 const PATTERN_NUMBER_ONLY = /^[0-9]+$/;
 const PATTERN_NUMBER_AND_COMMA = /^[0-9,]+$/
 
-const LOTTO_PRICE = 1000;
 const BONUS_NUMBER_COUNT = 1;
-const LOTTO_NUMBER_RANGE = [1, 45];
 
-export function validateNumberOnly(input) {
-  if (!PATTERN_NUMBER_ONLY.test(input)) {
+const LOTTO_PRICE = 1000;
+const LOTTO_NUMBER_RANGE = [1, 45];
+const LOTTO_NUMBER_COUNT = 6;
+
+export function validateNumberOnly(string) {
+  if (!PATTERN_NUMBER_ONLY.test(string)) {
     throw new Error(ERROR_MESSAGE.INVALID_NUMBER);
   }
 }
 
-export function validateUnitOfThousand(input) {
-  if (input % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
+export function validateUnitOfThousand(string) {
+  number = Number(string);
+  if (number % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
 }
 
 export function validateNotEmpty(input) {
@@ -39,17 +43,17 @@ export function validateNotEmpty(input) {
   if (input === null || input === undefined) throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
 } 
 
-export function validateMinimumAmount(input) {
-  input = Number(input);
-  if (input < LOTTO_PRICE) throw new Error(ERROR_MESSAGE.INVALID_MINIMUM_AMOUNT);
+export function validateMinimumAmount(string) {
+  number = Number(string);
+  if (number < LOTTO_PRICE) throw new Error(ERROR_MESSAGE.INVALID_MINIMUM_AMOUNT);
 }
   
-export function validateNumberAndComma(input) {
-  if(!PATTERN_NUMBER_AND_COMMA.test(input)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
+export function validateNumberAndComma(string) {
+  if(!PATTERN_NUMBER_AND_COMMA.test(string)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
 }
 
-export function validateNumberRange(input) {
-  for (let number of input) {
+export function validateNumberRange(Array) {
+  for (let number of Array) {
     if (
       number < LOTTO_NUMBER_RANGE[0] ||
       number > LOTTO_NUMBER_RANGE[1]
@@ -57,15 +61,22 @@ export function validateNumberRange(input) {
   }
 }
 
-export function validateBonusNumberCount(input) {
-  if (input.length !== BONUS_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_BONUS_NUMBER_COUNT);
+export function validateBonusNumberCount(string) {
+  if (string.length !== BONUS_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_BONUS_NUMBER_COUNT);
 }
 
-export function validatePurchaseInput(input) {
-    validateNumberOnly(input);
-    validateNotEmpty(input);
-    validateUnitOfThousand(input);
-    validateMinimumAmount(input);
+export function validateWinningNumbersCount(Array) {
+  if (Array.length !== LOTTO_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);
+}
+
+function validateDuplicateWithWinningNumbers(winningNumbers, bonusNumber) {
+}
+
+export function validatePurchaseInput(string) {
+    validateNumberOnly(string);
+    validateNotEmpty(string);
+    validateUnitOfThousand(string);
+    validateMinimumAmount(string);
 }
 
 

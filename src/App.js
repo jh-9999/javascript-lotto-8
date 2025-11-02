@@ -3,6 +3,7 @@ import {
   validatePurchaseInput,
   validateNumberAndComma, 
   validateNotEmpty,
+  validateNumberRange,
 } from "./validators.js";
 import Lotto from "./Lotto.js";
 
@@ -32,7 +33,9 @@ class App {
 
     let winningNumbersArray = splitNumbers(winningNumbers);
     validateNotEmpty(winningNumbersArray);
+    
     winningNumbersArray = convertStringToNumbers(winningNumbersArray);
+    validateNumberRange(winningNumbersArray);
 
     let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
   }

@@ -6,6 +6,7 @@ import {
     validateMinimumAmount,
     validateBonusNumberCount,
     validateNumberRange,
+    validateWinningNumbersCount,
 } from "../src/validators.js";
 
 describe("Validator 테스트", () => {
@@ -19,7 +20,7 @@ describe("Validator 테스트", () => {
 
     test("입력된 정수가 1000원 단위가 아니면 예외가 발생한다.", () => {
         expect(() => {
-            validateUnitOfThousand(1001);
+            validateUnitOfThousand("1001");
         })
         .toThrow("[ERROR] 1000원 단위로 입력해 주세요.");
     })
@@ -45,7 +46,14 @@ describe("Validator 테스트", () => {
         .toThrow("[ERROR] 로또 번호는 숫자만, 구분자는 콤마만 입력해주세요.")
     })
 
-    test("사용자가 입력한 번호가가 1미만이면 예외가 발생한다.", () => {
+    test("사용자가 입력한 당첨 번호가 6개가 아니면 예외가 발생한다.", () => {
+        expect(() => {
+            validateWinningNumbersCount([1, 2, 3, 4, 5]);
+        })
+        .toThrow("[ERROR] 당첨 번호는 6개여야 합니다.")
+    })
+
+    test("사용자가 입력한 번호가 1미만이면 예외가 발생한다.", () => {
         expect(() => {
             validateNumberRange([0]);
         })
@@ -64,4 +72,12 @@ describe("Validator 테스트", () => {
         })
         .toThrow("[ERROR] 보너스 번호는 1개만 입력해주세요.")
     })
+
+
+    // test("사용자가 입력한 보너스 번호가 당첨 번호에 포함되어 있으면 예외가 발생한다.", () => {
+    //     expect(() => {
+    //         ex([1, 2, 3, 4, 5], 5);
+    //     })
+    //     .toThrow("[ERROR] 보너스 번호는 당첨 번호에 포함되어 있으면 안 됩니다.")
+    // })
 })
