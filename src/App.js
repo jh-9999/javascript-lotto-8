@@ -7,6 +7,8 @@ import Lotto from "./Lotto.js";
 
 
 const PLACEHOLDER_BUY_LOTTO = "구입금액을 입력해 주세요.\n";
+const PLACEHOLDER_LOTTO_NUMBERS = "\n당첨 번호를 입력해 주세요.\n";
+const PLACEHOLDER_BONUS_NUMBER = "\n보너스 번호를 입력해 주세요.\n";
 const LOTTO_PRICE = 1000;
 
 const MESSAGE = {
@@ -23,7 +25,15 @@ class App {
     print(`\n${count}${MESSAGE.PURCHASE_AMOUNT}`);
 
     let tickets = generateLottoTickets(count);
+
+    let winningNumbers = await userInput(PLACEHOLDER_LOTTO_NUMBERS);
+    validateNumberAndComma(winningNumbers);
+
+    let winningNumbersArray = splitNumbers(winningNumbers);
     
+    winningNumbersArray = convertStringToNumbers(winningNumbersArray);
+
+    let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
   }
 }
 
