@@ -6,6 +6,7 @@ const ERROR_MESSAGE = {
     INVALID_NUMBER_RANGE: "[ERROR] 번호는 1~45 사이의 숫자여야 합니다.",
     INVALID_LENGTH_OF_NUMBERS: "[ERROR] 당첨 번호는 6개여야 합니다.",
     INVALID_BONUS_NUMBER_COUNT: "[ERROR] 보너스 번호는 1개만 입력해주세요.",
+    INVALID_DUPLICATE_WITH_WINNING_NUMBERS: "[ERROR] 보너스 번호는 당첨 번호에 포함되어 있으면 안 됩니다.",
     EMPTY_INPUT: "[ERROR] 값을 입력해주세요.",
 }
 
@@ -25,7 +26,7 @@ export function validateNumberOnly(string) {
 }
 
 export function validateUnitOfThousand(string) {
-  number = Number(string);
+  let number = Number(string);
   if (number % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
 }
 
@@ -44,7 +45,7 @@ export function validateNotEmpty(input) {
 } 
 
 export function validateMinimumAmount(string) {
-  number = Number(string);
+  let number = Number(string);
   if (number < LOTTO_PRICE) throw new Error(ERROR_MESSAGE.INVALID_MINIMUM_AMOUNT);
 }
   
@@ -69,7 +70,10 @@ export function validateWinningNumbersCount(Array) {
   if (Array.length !== LOTTO_NUMBER_COUNT) throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);
 }
 
-function validateDuplicateWithWinningNumbers(winningNumbers, bonusNumber) {
+export function validateDuplicateWithWinningNumbers(winningNumbers, bonusNumber) {
+  for (let number of winningNumbers) {
+    if (number === bonusNumber) throw new Error(ERROR_MESSAGE.INVALID_DUPLICATE_WITH_WINNING_NUMBERS);
+  }
 }
 
 export function validatePurchaseInput(string) {

@@ -7,6 +7,7 @@ import {
     validateBonusNumberCount,
     validateNumberRange,
     validateWinningNumbersCount,
+    validateDuplicateWithWinningNumbers,
 } from "../src/validators.js";
 
 describe("Validator 테스트", () => {
@@ -73,11 +74,10 @@ describe("Validator 테스트", () => {
         .toThrow("[ERROR] 보너스 번호는 1개만 입력해주세요.")
     })
 
-
-    // test("사용자가 입력한 보너스 번호가 당첨 번호에 포함되어 있으면 예외가 발생한다.", () => {
-    //     expect(() => {
-    //         ex([1, 2, 3, 4, 5], 5);
-    //     })
-    //     .toThrow("[ERROR] 보너스 번호는 당첨 번호에 포함되어 있으면 안 됩니다.")
-    // })
+    test("사용자가 입력한 보너스 번호가 당첨 번호에 포함되어 있으면 예외가 발생한다.", () => {
+        expect(() => {
+            validateDuplicateWithWinningNumbers([1, 2, 3, 4, 5, 6], 5);
+        })
+        .toThrow("[ERROR] 보너스 번호는 당첨 번호에 포함되어 있으면 안 됩니다.")
+    })
 })

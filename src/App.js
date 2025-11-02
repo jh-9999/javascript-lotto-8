@@ -4,6 +4,9 @@ import {
   validateNumberAndComma, 
   validateNotEmpty,
   validateNumberRange,
+  validateWinningNumbersCount,
+  validateBonusNumberCount,
+  validateDuplicateWithWinningNumbers,
 } from "./validators.js";
 import Lotto from "./Lotto.js";
 
@@ -36,8 +39,11 @@ class App {
     
     winningNumbersArray = convertStringToNumbers(winningNumbersArray);
     validateNumberRange(winningNumbersArray);
+    validateWinningNumbersCount(winningNumbersArray);
 
     let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
+    validateBonusNumberCount(bonusNumber);
+    validateDuplicateWithWinningNumbers(winningNumbersArray, bonusNumber);
   }
 }
 
