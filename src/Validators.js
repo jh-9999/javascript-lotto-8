@@ -18,12 +18,22 @@ export function validateNumberOnly(input) {
   }
 
 export function validateUnitOfThousand(input) {
-if (input % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
+  if (input % LOTTO_PRICE !== 0) throw new Error(ERROR_MESSAGE.INVALID_UNIT_OF_THOUSAND);
 }
 
 export function validateNotEmpty(input) {
-    if(input.trim() === "") throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+  if (Array.isArray(input)) {
+    if (input.length === 0) throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+    return;
   }
+
+  if (typeof input === "string") {
+    if (input.trim() === "") throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+    return;
+  }
+  
+  if (input === null || input === undefined) throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+  } 
 
 export function validateMinimumAmount(input) {
   input = Number(input);

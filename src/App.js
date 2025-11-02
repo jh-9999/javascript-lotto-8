@@ -1,7 +1,8 @@
 import { Console, Random } from "@woowacourse/mission-utils"
 import { 
   validatePurchaseInput,
-  validateNumberAndComma 
+  validateNumberAndComma, 
+  validateNotEmpty,
 } from "./validators.js";
 import Lotto from "./Lotto.js";
 
@@ -30,6 +31,7 @@ class App {
     validateNumberAndComma(winningNumbers);
 
     let winningNumbersArray = splitNumbers(winningNumbers);
+    validateNotEmpty(winningNumbersArray);
     
     winningNumbersArray = convertStringToNumbers(winningNumbersArray);
 
