@@ -27,3 +27,9 @@ export function validateNotEmpty(input) {
 export function validateNumberAndComma(input) {
 if(!PATTERN_NUMBER_AND_COMMA.test(input)) throw new Error(ERROR_MESSAGE.INVALID_NUMBER_AND_COMMA);
 }
+
+export function validatePurchaseInput(input) {
+    validateNumberOnly(input);
+    validateNotEmpty(input);
+    validateUnitOfThousand(input);
+}

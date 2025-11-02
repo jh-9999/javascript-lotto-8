@@ -9,7 +9,7 @@ describe("Validator 테스트", () => {
 
     test("숫자외에 다른 문자가 입력되면 예외가 발생한다.", () => {
         expect(() => {
-            validateNumberOnly("100!j");
+            validateNumberOnly("-100");
         })
         .toThrow("[ERROR] 숫자만 입력해 주세요.");
     })
