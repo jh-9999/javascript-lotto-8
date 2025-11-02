@@ -31,6 +31,13 @@ class Lotto {
     return count;
   }
 
+  checkBonusNumber(bonusNumber) {
+    if (this.#numbers.includes(bonusNumber)) {
+      return true;
+    }
+    return false;
+  }
+
   validateLengthOfNumbers(numbers) {
     if (numbers.length !== LOTTO_NUMBER_COUNT) {
       throw new Error(ERROR_MESSAGE.INVALID_LENGTH_OF_NUMBERS);
