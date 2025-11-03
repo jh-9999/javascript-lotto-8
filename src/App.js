@@ -45,31 +45,36 @@ const PRIZE_AMOUNT = {
 
 class App {
   async run() {
-    let purchaseAmount = await userInput(PLACEHOLDER_BUY_LOTTO);
-    validatePurchaseInput(purchaseAmount);
-    purchaseAmount = Number(purchaseAmount);
+    const purchaseAmount = await retryUserInput(PLACEHOLDER_BUY_LOTTO, (s) => {
+      validatePurchaseInput(s);
+      return Number(s);
+    })
 
     const count = purchaseCount(purchaseAmount);
     print(`\n${count}${MESSAGE.PURCHASE_AMOUNT}`);
 
     let tickets = generateLottoTickets(count);
 
-    let winningNumbers = await userInput(PLACEHOLDER_LOTTO_NUMBERS);
-    validateNumberAndComma(winningNumbers);
+    const winningNumbers = await retryUserInput(PLACEHOLDER_LOTTO_NUMBERS, (s) => {
+      validateNumberAndComma(s);
 
-    let winningNumbersArray = splitNumbers(winningNumbers);
-    validateNotEmpty(winningNumbersArray);
-    
-    winningNumbersArray = convertStringToNumbers(winningNumbersArray);
-    validateNumberRange(winningNumbersArray);
-    validateWinningNumbersCount(winningNumbersArray);
+      let winningNumbersArray = splitNumbers(s);
+      validateNotEmpty(winningNumbersArray);
 
-    let bonusNumber = await userInput(PLACEHOLDER_BONUS_NUMBER);
-    validateBonusNumberCount(bonusNumber);
+      winningNumbersArray = convertStringToNumbers(winningNumbersArray);
+      validateNumberRange(winningNumbersArray);
+      validateWinningNumbersCount(winningNumbersArray);
 
-    bonusNumber = Number(bonusNumber);
-    validateDuplicateWithWinningNumbers(winningNumbersArray, bonusNumber);
-    validateNumberRange([bonusNumber]);
+      return winningNumbersArray;
+    })
+
+    const bonusNumber = await retryUserInput(PLACEHOLDER_BONUS_NUMBER, (s) => {
+      validateBonusNumberCount(s);
+      let number = Number(s);
+      validateDuplicateWithWinningNumbers(winningNumbers, number);
+      validateNumberRange([number]);
+      return number;
+    })
 
     print(MESSAGE.WINNING_STATISTICS);
 
@@ -82,7 +87,7 @@ class App {
     }
 
     for (let ticket of tickets) {
-      let count = ticket.compareWithWinningNumbers(winningNumbersArray);
+      let count = ticket.compareWithWinningNumbers(winningNumbers);
       if (count === MATCH_COUNT.FIVE && ticket.checkBonusNumber(bonusNumber)) {
        count = MATCH_COUNT.FIVE_AND_BONUS;
       }
@@ -167,7 +172,7 @@ async function retryUserInput(placeholder, validator) {
       const input = await userInput(placeholder);
       return validator(input);
     }catch (error) {
-
+      print(error.message);
     }
   }
 }
