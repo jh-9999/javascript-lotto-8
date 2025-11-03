@@ -160,4 +160,16 @@ export function convertStringToNumbers(input) {
   return input;
 }
 
+
+async function retryUserInput(placeholder, validator) {
+  while (true) {
+    try {
+      const input = await userInput(placeholder);
+      return validator(input);
+    }catch (error) {
+
+    }
+  }
+}
+
 export default App;
