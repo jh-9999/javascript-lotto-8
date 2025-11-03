@@ -8,7 +8,7 @@ import {
     validateNumberRange,
     validateWinningNumbersCount,
     validateDuplicateWithWinningNumbers,
-} from "../src/validators.js";
+} from "../src/Validators.js";
 
 describe("Validator 테스트", () => {
 

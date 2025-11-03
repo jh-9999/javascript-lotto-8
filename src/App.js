@@ -7,7 +7,7 @@ import {
   validateWinningNumbersCount,
   validateBonusNumber,
   validateDuplicateWithWinningNumbers,
-} from "./validators.js";
+} from "./Validators.js";
 import Lotto from "./Lotto.js";
 
 const PLACEHOLDER_BUY_LOTTO = "구입금액을 입력해 주세요.\n";
