@@ -5,7 +5,7 @@ import {
   validateNotEmpty,
   validateNumberRange,
   validateWinningNumbersCount,
-  validateBonusNumberCount,
+  validateBonusNumber,
   validateDuplicateWithWinningNumbers,
 } from "./validators.js";
 import Lotto from "./Lotto.js";
@@ -69,7 +69,7 @@ class App {
     })
 
     const bonusNumber = await retryUserInput(PLACEHOLDER_BONUS_NUMBER, (s) => {
-      validateBonusNumberCount(s);
+      validateBonusNumber(s);
       let number = Number(s);
       validateDuplicateWithWinningNumbers(winningNumbers, number);
       validateNumberRange([number]);

@@ -77,10 +77,14 @@ export function validateDuplicateWithWinningNumbers(winningNumbers, bonusNumber)
 }
 
 export function validatePurchaseInput(string) {
-    validateNumberOnly(string);
-    validateNotEmpty(string);
-    validateUnitOfThousand(string);
-    validateMinimumAmount(string);
+  validateNumberOnly(string);
+  validateNotEmpty(string);
+  validateUnitOfThousand(string);
+  validateMinimumAmount(string);
 }
 
-
+export function validateBonusNumber(string) {
+  validateNumberOnly(string);
+  validateNotEmpty(string);
+  validateBonusNumberCount(string);
+}
