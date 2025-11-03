@@ -10,7 +10,6 @@ import {
 } from "./validators.js";
 import Lotto from "./Lotto.js";
 
-
 const PLACEHOLDER_BUY_LOTTO = "구입금액을 입력해 주세요.\n";
 const PLACEHOLDER_LOTTO_NUMBERS = "\n당첨 번호를 입력해 주세요.\n";
 const PLACEHOLDER_BONUS_NUMBER = "\n보너스 번호를 입력해 주세요.\n";
@@ -45,16 +44,21 @@ const PRIZE_AMOUNT = {
 
 class App {
   async run() {
+
+    // 구입 금액 입력
     const purchaseAmount = await retryUserInput(PLACEHOLDER_BUY_LOTTO, (s) => {
       validatePurchaseInput(s);
       return Number(s);
     })
 
+    // 로또 개수 계산
     const count = purchaseCount(purchaseAmount);
     print(`\n${count}${MESSAGE.PURCHASE_AMOUNT}`);
 
+    // 로또 번호 생성
     let tickets = generateLottoTickets(count);
 
+    // 당첨 번호 입력
     const winningNumbers = await retryUserInput(PLACEHOLDER_LOTTO_NUMBERS, (s) => {
       validateNumberAndComma(s);
 
@@ -68,6 +72,7 @@ class App {
       return winningNumbersArray;
     })
 
+    // 보너스 번호 입력
     const bonusNumber = await retryUserInput(PLACEHOLDER_BONUS_NUMBER, (s) => {
       validateBonusNumber(s);
       let number = Number(s);
@@ -76,27 +81,16 @@ class App {
       return number;
     })
 
+    // 당첨 통계 출력
     print(MESSAGE.WINNING_STATISTICS);
 
-    const resultCounts = {
-      [MATCH_COUNT.THREE]: 0,
-      [MATCH_COUNT.FOUR]: 0,
-      [MATCH_COUNT.FIVE]: 0,
-      [MATCH_COUNT.FIVE_AND_BONUS]: 0,
-      [MATCH_COUNT.SIX]: 0,
-    }
+    // 당첨 통계 계산
+    const resultCounts = calculateWinningResult(tickets, winningNumbers, bonusNumber);
 
-    for (let ticket of tickets) {
-      let count = ticket.compareWithWinningNumbers(winningNumbers);
-      if (count === MATCH_COUNT.FIVE && ticket.checkBonusNumber(bonusNumber)) {
-       count = MATCH_COUNT.FIVE_AND_BONUS;
-      }
-      if (count >= MATCH_COUNT.THREE) {
-        resultCounts[count]++;
-      }
-    }
-
+    // 당첨 통계 출력
     printResultCounts(resultCounts);
+
+    // 수익률 계산
     print(MESSAGE.PROFIT_RATE(calculateProfitRate(resultCounts, purchaseAmount)));
   }
 }
@@ -122,6 +116,46 @@ function generateLottoNumbers() {
   return lottoNumbers.sort((a, b) => a - b)
 }
 
+function generateLottoTickets(count) {
+  let tickets = [];
+  for (let i = 0; i < count; i++) {
+    let numbers = generateLottoNumbers();
+    let ticket = new Lotto(numbers);
+    print(`[${ticket.getNumbers().join(", ")}]`);
+    tickets.push(ticket);
+  }
+  return tickets;
+}
+
+export function convertStringToNumbers(input) {
+  for (let i = 0; i < input.length; i++) {
+    let number = Number(input[i]);
+    input[i] = number;
+  }
+  return input;
+}
+
+function calculateWinningResult(tickets, winningNumbers, bonusNumber) {
+  const resultCounts = {
+    [MATCH_COUNT.THREE]: 0,
+    [MATCH_COUNT.FOUR]: 0,
+    [MATCH_COUNT.FIVE]: 0,
+    [MATCH_COUNT.FIVE_AND_BONUS]: 0,
+    [MATCH_COUNT.SIX]: 0,
+  }
+
+  for (let ticket of tickets) {
+    let count = ticket.compareWithWinningNumbers(winningNumbers);
+    if (count === MATCH_COUNT.FIVE && ticket.checkBonusNumber(bonusNumber)) {
+     count = MATCH_COUNT.FIVE_AND_BONUS;
+    }
+    if (count >= MATCH_COUNT.THREE) {
+      resultCounts[count]++;
+    }
+  }
+  return resultCounts;
+}
+
 export function printResultCounts(resultCounts) {
   print(MESSAGE.THREE_MATCH(resultCounts[MATCH_COUNT.THREE]));
   print(MESSAGE.FOUR_MATCH(resultCounts[MATCH_COUNT.FOUR]));
@@ -145,26 +179,6 @@ function calculateProfitRate(resultCounts, purchaseAmount) {
   }
   return ((totalPrize / purchaseAmount) * 100).toFixed(1);
 }
-
-function generateLottoTickets(count) {
-  let tickets = [];
-  for (let i = 0; i < count; i++) {
-    let numbers = generateLottoNumbers();
-    let ticket = new Lotto(numbers);
-    print(`[${ticket.getNumbers().join(", ")}]`);
-    tickets.push(ticket);
-  }
-  return tickets;
-}
-
-export function convertStringToNumbers(input) {
-  for (let i = 0; i < input.length; i++) {
-    let number = Number(input[i]);
-    input[i] = number;
-  }
-  return input;
-}
-
 
 async function retryUserInput(placeholder, validator) {
   while (true) {
